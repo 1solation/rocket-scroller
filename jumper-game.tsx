@@ -56,14 +56,8 @@ export default function JumperGame() {
         const x = Math.random() * width;
         const y = Math.random() * height;
         const size = Math.random() * 50 + 20;
-
-        // Draw multiple overlapping circles to form a cloud
         ctx.beginPath();
         ctx.arc(x, y, size, 0, Math.PI * 2);
-        ctx.arc(x + size * 0.6, y, size * 0.8, 0, Math.PI * 2);
-        ctx.arc(x - size * 0.6, y, size * 0.8, 0, Math.PI * 2);
-        ctx.arc(x + size * 0.3, y - size * 0.5, size * 0.7, 0, Math.PI * 2);
-        ctx.arc(x - size * 0.3, y - size * 0.5, size * 0.7, 0, Math.PI * 2);
         ctx.fill();
       }
     };
@@ -137,7 +131,7 @@ export default function JumperGame() {
       {gameOver && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50">
           <h2 className="text-4xl font-bold text-white mb-4">Game Over!</h2>
-          <p className="text-2xl text-white mb-2">Score: {Math.floor(score)}</p>
+          <p className="text-2xl text-white mb-2">Score: {score}</p>
           <p className="text-2xl text-white mb-4">High Score: {highScore}</p>
           <button
             className="px-4 py-2 text-lg font-semibold text-white bg-blue-500 rounded hover:bg-blue-600"
