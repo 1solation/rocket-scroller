@@ -155,9 +155,15 @@ export default function JumperGame() {
       <canvas ref={canvasRef} className="absolute inset-0" />
       {!gameStarted && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <h1 className="text-4xl font-bold text-black bg-black bg-opacity-25 rounded-lg p-4">
-            Scroll to start flying!
-          </h1>
+          {isMobile ? (
+            <h1 className="text-4xl font-bold text-black bg-black bg-opacity-25 rounded-lg p-4">
+              Tap to start flying!
+            </h1>
+          ) : (
+            <h1 className="text-4xl font-bold text-black bg-black bg-opacity-25 rounded-lg p-4">
+              Scroll to start flying!
+            </h1>
+          )}
         </div>
       )}
       {gameOver && (
