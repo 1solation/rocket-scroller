@@ -1,8 +1,8 @@
 "use client";
 
-import type React from "react";
-import { useRef, useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useWindowSize } from "react-use";
+import confetti from "canvas-confetti";
 
 const ROCKET_WIDTH = 50;
 const ROCKET_HEIGHT = 80;
@@ -121,6 +121,32 @@ export default function JumperGame() {
     lastScrollTimeRef.current = Date.now();
   };
 
+  const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+
+  const handleButtonClick = () => {
+    if (!gameStarted) {
+      setGameStarted(true);
+      setGameOver(false);
+      setScore(0);
+      rocketPositionRef.current = 0;
+    }
+
+    if (gameOver) return;
+
+    rocketPositionRef.current += SCROLL_SPEED;
+    lastScrollTimeRef.current = Date.now();
+  };
+
+  useEffect(() => {
+    if (gameOver && Math.floor(score) === highScore) {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+      });
+    }
+  }, [gameOver, score, highScore]);
+
   return (
     <div
       className="relative w-full h-screen overflow-hidden"
@@ -129,18 +155,29 @@ export default function JumperGame() {
       <canvas ref={canvasRef} className="absolute inset-0" />
       {!gameStarted && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <h1 className="text-4xl font-bold text-white">
+          <h1 className="text-4xl font-bold text-black bg-black bg-opacity-25 rounded-lg p-4">
             Scroll to start flying!
           </h1>
         </div>
       )}
       {gameOver && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50">
-          <h2 className="text-4xl font-bold text-white mb-4">Game Over!</h2>
-          <p className="text-2xl text-white mb-2">Score: {Math.floor(score)}</p>
-          <p className="text-2xl text-white mb-4">High Score: {highScore}</p>
+          <h2 className="text-4xl font-bold text-black rounded-lg p-4 mb-4">
+            Game Over!
+          </h2>
+          <p className="text-2xl text-black rounded-lg p-4 mb-2">
+            Score: {Math.floor(score)}
+          </p>
+          <p className="text-2xl text-black rounded-lg p-4 mb-4">
+            High Score: {highScore}
+          </p>
+          {Math.floor(score) === highScore && (
+            <div className="text-3xl font-bold text-white bg-black bg-opacity-25 rounded-lg p-4 mb-4">
+              🎉 You have a new high score! 🎉
+            </div>
+          )}
           <button
-            className="px-4 py-2 text-lg font-semibold text-white bg-blue-500 rounded hover:bg-blue-600"
+            className="px-4 py-2 text-lg font-semibold text-black bg-blue-500 rounded hover:bg-blue-600"
             onClick={() => {
               setGameStarted(false);
               setGameOver(false);
@@ -150,12 +187,20 @@ export default function JumperGame() {
           </button>
         </div>
       )}
-      <div className="absolute top-4 left-4 text-xl font-semibold text-white">
+      <div className="absolute top-4 left-4 text-xl font-semibold text-black bg-black bg-opacity-15 rounded-lg p-2">
         Score: {Math.floor(score)}
       </div>
-      <div className="absolute top-4 right-4 text-xl font-semibold text-white">
+      <div className="absolute top-4 right-4 text-xl font-semibold text-black bg-black bg-opacity-15 rounded-lg p-2">
         High Score: {highScore}
       </div>
+      {isMobile && (
+        <button
+          className="absolute bottom-4 right-4 p-4 bg-blue-500 text-white rounded-full shadow-lg"
+          onClick={handleButtonClick}
+        >
+          ↑
+        </button>
+      )}
     </div>
   );
 }
