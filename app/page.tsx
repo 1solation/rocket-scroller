@@ -156,11 +156,11 @@ export default function JumperGame() {
       {!gameStarted && (
         <div className="absolute inset-0 flex items-center justify-center">
           {isMobile ? (
-            <h1 className="text-4xl font-bold text-black bg-black bg-opacity-25 rounded-lg p-4">
-              Tap to start flying!
+            <h1 className="text-4xl font-bold text-black bg-black bg-opacity-25 rounded-lg p-4 text-center">
+              Tap the button to start flying!
             </h1>
           ) : (
-            <h1 className="text-4xl font-bold text-black bg-black bg-opacity-25 rounded-lg p-4">
+            <h1 className="text-4xl font-bold text-black bg-black bg-opacity-25 rounded-lg p-4 text-center">
               Scroll to start flying!
             </h1>
           )}
@@ -178,8 +178,10 @@ export default function JumperGame() {
             High Score: {highScore}
           </p>
           {Math.floor(score) === highScore && (
-            <div className="text-3xl font-bold text-white bg-black bg-opacity-25 rounded-lg p-4 mb-4">
-              🎉 You have a new high score! 🎉
+            <div className="text-3xl font-bold text-white bg-black bg-opacity-25 rounded-lg p-4 mb-4 text-center">
+              <p>🎉🎉🎉🎉</p>
+              You have a new high score!
+              <p>🎉🎉🎉🎉</p>
             </div>
           )}
           <button
@@ -201,7 +203,7 @@ export default function JumperGame() {
       </div>
       {isMobile && (
         <button
-          className="absolute bottom-4 right-4 p-4 bg-blue-500 text-white rounded-full shadow-lg"
+          className="absolute bottom-4 right-4 p-4 bg-black bg-opacity-15 text-black rounded-lg shadow-lg"
           onClick={handleButtonClick}
         >
           ↑
